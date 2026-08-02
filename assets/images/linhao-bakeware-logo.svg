@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="180" viewBox="0 0 620 180" role="img" aria-labelledby="title desc">
+  <title id="title">LINHAO BAKEWARE</title>
+  <desc id="desc">A gold and charcoal muffin pan icon beside the words LINHAO BAKEWARE</desc>
+  <g transform="translate(16,30)">
+    <path d="M20 24h150l12 20-10 50c-2 11-11 18-22 18H40c-11 0-20-7-22-18L8 44z" fill="#1f2933"/>
+    <path d="M19 24h152c8 0 14 6 14 14v18H5V38c0-8 6-14 14-14z" fill="#c89a3b"/>
+    <g fill="#8f681d" stroke="#f6e4b9" stroke-width="4">
+      <ellipse cx="36" cy="39" rx="14" ry="10"/><ellipse cx="68" cy="39" rx="14" ry="10"/><ellipse cx="100" cy="39" rx="14" ry="10"/><ellipse cx="132" cy="39" rx="14" ry="10"/><ellipse cx="164" cy="39" rx="14" ry="10"/>
+      <ellipse cx="36" cy="70" rx="14" ry="10"/><ellipse cx="68" cy="70" rx="14" ry="10"/><ellipse cx="100" cy="70" rx="14" ry="10"/><ellipse cx="132" cy="70" rx="14" ry="10"/><ellipse cx="164" cy="70" rx="14" ry="10"/>
+    </g>
+  </g>
+  <g transform="translate(230,34)">
+    <text x="0" y="58" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700" letter-spacing="6" fill="#202832">LINHAO</text>
+    <line x1="3" y1="98" x2="62" y2="98" stroke="#c89a3b" stroke-width="5"/>
+    <text x="78" y="108" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" letter-spacing="8" fill="#202832">BAKEWARE</text>
+    <line x1="337" y1="98" x2="395" y2="98" stroke="#c89a3b" stroke-width="5"/>
+  </g>
+</svg>

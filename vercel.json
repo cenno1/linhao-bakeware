@@ -3,6 +3,17 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.linhaobakeware.com"
+        }
+      ],
+      "destination": "https://linhaobakeware.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {

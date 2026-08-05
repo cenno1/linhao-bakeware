@@ -185,6 +185,7 @@ textarea{min-height:132px;resize:vertical}
 .whatsapp-float{position:fixed;right:22px;bottom:22px;z-index:50;background:#1f9d68;color:#fff;border-radius:999px;padding:13px 18px;box-shadow:0 12px 32px rgba(20,100,70,.35);font-weight:850}
 .reveal{opacity:0;transform:translateY(20px);transition:.7s ease}
 .reveal.visible{opacity:1;transform:none}
+.hero .reveal{opacity:1;transform:none}
 .mobile-only{display:none}
 @media(max-width:980px){
   .nav-links{position:fixed;inset:116px 18px auto;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:20px;padding:20px;display:none;flex-direction:column;align-items:stretch;gap:0}

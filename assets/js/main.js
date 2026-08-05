@@ -65,8 +65,10 @@ if (inquiryForm) {
       `Company: ${data.get('company') || ''}`,
       `Email: ${data.get('email') || ''}`,
       `Country/Region: ${data.get('country') || ''}`,
+      `Project Type: ${data.get('project_type') || ''}`,
       `Product / Project: ${data.get('product') || ''}`,
       `Estimated Quantity: ${data.get('quantity') || ''}`,
+      `Target Timing: ${data.get('timing') || ''}`,
       '',
       `${data.get('message') || ''}`
     ].join('\n');

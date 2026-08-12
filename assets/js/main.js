@@ -56,25 +56,41 @@ if (inquiryForm) {
   const params = new URLSearchParams(window.location.search);
   const productField = inquiryForm.querySelector('[name="product"]');
   if (productField && params.get('product')) productField.value = params.get('product');
-  inquiryForm.addEventListener('submit', (event) => {
+  inquiryForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const submitButton = inquiryForm.querySelector('button[type="submit"]');
+    const statusMessage = inquiryForm.querySelector('#inquiry-status');
     const data = new FormData(inquiryForm);
-    const subject = `B2B Bakeware Inquiry - ${data.get('company') || data.get('name') || 'New Buyer'}`;
-    const body = [
-      `Name: ${data.get('name') || ''}`,
-      `Company: ${data.get('company') || ''}`,
-      `Email: ${data.get('email') || ''}`,
-      `Country/Region: ${data.get('country') || ''}`,
-      `Project Type: ${data.get('project_type') || ''}`,
-      `Product / Project: ${data.get('product') || ''}`,
-      `Estimated Quantity: ${data.get('quantity') || ''}`,
-      `Target Timing: ${data.get('timing') || ''}`,
-      '',
-      `${data.get('message') || ''}`
-    ].join('\n');
-    gtag('event', 'generate_lead', { form_id: 'inquiry_form' });
-    const mailto = `mailto:info@lh-industrial.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.setTimeout(() => { window.location.href = mailto; }, 250);
+    const payload = Object.fromEntries(data.entries());
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    statusMessage.className = 'form-status';
+    statusMessage.textContent = '';
+
+    try {
+      const response = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.message || 'Unable to send your inquiry.');
+
+      gtag('event', 'generate_lead', {
+        form_id: 'inquiry_form',
+        project_type: payload.project_type || 'not_selected'
+      });
+      statusMessage.className = 'form-status success';
+      statusMessage.textContent = 'Inquiry sent successfully. Redirecting...';
+      inquiryForm.reset();
+      window.setTimeout(() => { window.location.href = '/thank-you'; }, 500);
+    } catch (error) {
+      statusMessage.className = 'form-status error';
+      statusMessage.textContent = `${error.message} You can also email info@lh-industrial.com or use WhatsApp.`;
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send Project Inquiry';
+    }
   });
 }
 

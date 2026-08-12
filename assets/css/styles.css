@@ -165,6 +165,11 @@ input,textarea,select{width:100%;border:1px solid #cdd5da;border-radius:12px;pad
 input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,154,59,.13)}
 textarea{min-height:132px;resize:vertical}
 .form-note{font-size:.8rem;color:var(--muted)}
+.form-status{min-height:1.5em;margin:10px 0 0;font-size:.9rem;font-weight:700}
+.form-status.success{color:var(--success)}
+.form-status.error{color:#a62828}
+.honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.form-card button:disabled{opacity:.65;cursor:wait}
 .article{max-width:820px;margin:auto}
 .article h1{font-size:clamp(2.6rem,5vw,4.5rem);line-height:1.05;letter-spacing:-.045em;color:var(--navy)}
 .article h2{margin-top:42px;color:var(--navy);font-size:1.9rem}

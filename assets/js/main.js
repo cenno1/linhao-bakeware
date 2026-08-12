@@ -56,41 +56,33 @@ if (inquiryForm) {
   const params = new URLSearchParams(window.location.search);
   const productField = inquiryForm.querySelector('[name="product"]');
   if (productField && params.get('product')) productField.value = params.get('product');
-  inquiryForm.addEventListener('submit', async (event) => {
+  inquiryForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const submitButton = inquiryForm.querySelector('button[type="submit"]');
     const statusMessage = inquiryForm.querySelector('#inquiry-status');
     const data = new FormData(inquiryForm);
     const payload = Object.fromEntries(data.entries());
+    const subject = `LINHAO Bakeware inquiry - ${payload.product || 'OEM / ODM project'} - ${payload.company || 'Buyer'}`;
+    const body = [
+      `Name: ${payload.name || ''}`,
+      `Company: ${payload.company || ''}`,
+      `Business email: ${payload.email || ''}`,
+      `Country / Region: ${payload.country || 'Not provided'}`,
+      `Project type: ${payload.project_type || 'Not provided'}`,
+      `Product / Project: ${payload.product || ''}`,
+      `Estimated quantity: ${payload.quantity || 'Not provided'}`,
+      `Target timing: ${payload.timing || 'Not provided'}`,
+      '',
+      'Specification and packaging details:',
+      payload.message || ''
+    ].join('\n');
 
-    submitButton.disabled = true;
-    submitButton.textContent = 'Sending...';
-    statusMessage.className = 'form-status';
-    statusMessage.textContent = '';
-
-    try {
-      const response = await fetch('/api/inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok || !result.ok) throw new Error(result.message || 'Unable to send your inquiry.');
-
-      gtag('event', 'generate_lead', {
-        form_id: 'inquiry_form',
-        project_type: payload.project_type || 'not_selected'
-      });
-      statusMessage.className = 'form-status success';
-      statusMessage.textContent = 'Inquiry sent successfully. Redirecting...';
-      inquiryForm.reset();
-      window.setTimeout(() => { window.location.href = '/thank-you'; }, 500);
-    } catch (error) {
-      statusMessage.className = 'form-status error';
-      statusMessage.textContent = `${error.message} You can also email info@lh-industrial.com or use WhatsApp.`;
-      submitButton.disabled = false;
-      submitButton.textContent = 'Send Project Inquiry';
-    }
+    gtag('event', 'inquiry_email_open', {
+      form_id: 'inquiry_form',
+      project_type: payload.project_type || 'not_selected'
+    });
+    statusMessage.className = 'form-status success';
+    statusMessage.textContent = 'Your email application is opening. Review the message and press Send.';
+    window.location.href = `mailto:info@lh-industrial.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 }
 

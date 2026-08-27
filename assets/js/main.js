@@ -56,6 +56,13 @@ if (inquiryForm) {
   const params = new URLSearchParams(window.location.search);
   const productField = inquiryForm.querySelector('[name="product"]');
   if (productField && params.get('product')) productField.value = params.get('product');
+
+  const productContext = productField?.value || params.get('product') || '';
+  const isMuffinInquiry = /muffin|cupcake/i.test(productContext);
+  const muffinFields = inquiryForm.querySelector('#muffin-quote-fields');
+  const muffinContext = document.querySelector('#muffin-quote-context');
+  if (muffinFields) muffinFields.hidden = !isMuffinInquiry;
+  if (muffinContext) muffinContext.hidden = !isMuffinInquiry;
   inquiryForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const statusMessage = inquiryForm.querySelector('#inquiry-status');
@@ -71,6 +78,12 @@ if (inquiryForm) {
       `Product / Project: ${payload.product || ''}`,
       `Estimated quantity: ${payload.quantity || 'Not provided'}`,
       `Target timing: ${payload.timing || 'Not provided'}`,
+      ...(isMuffinInquiry ? [
+        `Muffin format: ${payload.muffin_format || 'Not provided'}`,
+        `Cavity count: ${payload.cup_count || 'Not provided'}`,
+        `Cup dimensions: ${payload.cup_dimensions || 'Not provided'}`,
+        `Liner / finished profile: ${payload.liner_profile || 'Not provided'}`
+      ] : []),
       '',
       'Specification and packaging details:',
       payload.message || ''

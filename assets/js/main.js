@@ -55,10 +55,28 @@ gtag('config', GA_MEASUREMENT_ID, {
   campaign_name: attribution.utm_campaign || undefined
 });
 
-const gaScript = document.createElement('script');
-gaScript.async = true;
-gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-document.head.appendChild(gaScript);
+// Load GA4 on idle or first user interaction to achieve 0ms Total Blocking Time (TBT)
+let gaLoaded = false;
+function loadGA() {
+  if (gaLoaded) return;
+  gaLoaded = true;
+  const gaScript = document.createElement('script');
+  gaScript.async = true;
+  gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(gaScript);
+}
+
+// Trigger immediately on first human interaction
+['scroll', 'touchstart', 'click', 'keydown'].forEach(evt => {
+  window.addEventListener(evt, loadGA, { once: true, passive: true });
+});
+
+// Fallback idle load after critical rendering path completes
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => setTimeout(loadGA, 2500));
+} else {
+  setTimeout(loadGA, 3000);
+}
 
 // ----------------------------------------------------
 // 3. User Interaction & Micro-Conversion Tracking

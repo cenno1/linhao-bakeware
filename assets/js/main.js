@@ -63,39 +63,62 @@ if (inquiryForm) {
   const muffinContext = document.querySelector('#muffin-quote-context');
   if (muffinFields) muffinFields.hidden = !isMuffinInquiry;
   if (muffinContext) muffinContext.hidden = !isMuffinInquiry;
-  inquiryForm.addEventListener('submit', (event) => {
+
+  inquiryForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const submitBtn = inquiryForm.querySelector('button[type="submit"]');
     const statusMessage = inquiryForm.querySelector('#inquiry-status');
+    const originalBtnHtml = submitBtn.innerHTML;
+
+    // Loading state & prevent double submission
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><svg style="animation:spin 1s linear infinite;width:18px;height:18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg> Submitting Inquiry...</span>';
+    if (statusMessage) {
+      statusMessage.className = 'form-status';
+      statusMessage.textContent = '';
+    }
+
     const data = new FormData(inquiryForm);
     const payload = Object.fromEntries(data.entries());
-    const subject = `LINHAO Bakeware inquiry - ${payload.product || 'OEM / ODM project'} - ${payload.company || 'Buyer'}`;
-    const body = [
-      `Name: ${payload.name || ''}`,
-      `Company: ${payload.company || ''}`,
-      `Business email: ${payload.email || ''}`,
-      `Country / Region: ${payload.country || 'Not provided'}`,
-      `Project type: ${payload.project_type || 'Not provided'}`,
-      `Product / Project: ${payload.product || ''}`,
-      `Estimated quantity: ${payload.quantity || 'Not provided'}`,
-      `Target timing: ${payload.timing || 'Not provided'}`,
-      ...(isMuffinInquiry ? [
-        `Muffin format: ${payload.muffin_format || 'Not provided'}`,
-        `Cavity count: ${payload.cup_count || 'Not provided'}`,
-        `Cup dimensions: ${payload.cup_dimensions || 'Not provided'}`,
-        `Liner / finished profile: ${payload.liner_profile || 'Not provided'}`
-      ] : []),
-      '',
-      'Specification and packaging details:',
-      payload.message || ''
-    ].join('\n');
 
-    gtag('event', 'inquiry_email_open', {
-      form_id: 'inquiry_form',
-      project_type: payload.project_type || 'not_selected'
-    });
-    statusMessage.className = 'form-status success';
-    statusMessage.textContent = 'Your email application is opening. Review the message and press Send.';
-    window.location.href = `mailto:info@lh-industrial.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // Web3Forms API Configuration
+    data.append('access_key', '7a689baa-62d5-4abb-ad5c-8f6cbc9739ca');
+    data.append('from_name', 'LINHAO Bakeware B2B Portal');
+    data.append('subject', `[New B2B Lead] ${payload.product || 'Bakeware Project'} from ${payload.company || payload.name}`);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        // Track GA4 conversion
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', {
+            event_category: 'inquiry',
+            form_id: 'inquiry_form',
+            lead_type: 'b2b_inquiry',
+            product: payload.product || 'Not specified',
+            project_type: payload.project_type || 'not_selected',
+            country: payload.country || 'Not specified'
+          });
+        }
+        // Redirect to verified thank-you page
+        window.location.href = 'thank-you.html';
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch (err) {
+      console.warn('Direct inquiry transmission failed:', err);
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHtml;
+      if (statusMessage) {
+        statusMessage.className = 'form-status error';
+        statusMessage.innerHTML = `Transmission delay detected. Please <a href="mailto:info@lh-industrial.com?subject=${encodeURIComponent('Inquiry from ' + (payload.company || 'Buyer'))}" style="text-decoration:underline;color:inherit;font-weight:bold;">send directly via email</a> or connect via WhatsApp.`;
+      }
+    }
   });
 }
 

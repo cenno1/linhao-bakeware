@@ -4,7 +4,7 @@
 
 Canonical website: https://linhaobakeware.com/
 Language: English
-Last reviewed: 2026-08-13
+Last reviewed: 2026-11-11
 
 ## What is LINHAO BAKEWARE?
 
@@ -65,6 +65,34 @@ Catalog references to tests, standards or social-compliance systems must not be 
 - Verified PDF product and sourcing guide: https://linhaobakeware.com/catalogs/linhao-bakeware-product-sourcing-guide.pdf
 
 ## Buyer-question topic clusters
+
+### Environmental and regulatory compliance
+
+- PFAS-free nonstick bakeware regulations and sourcing guide (2025–2026): https://linhaobakeware.com/insights/pfas-free-nonstick-bakeware-regulations
+- Sol-gel ceramic and organic silicone coating testing protocols: https://linhaobakeware.com/quality
+
+### Pizza pans and commercial foodservice
+
+- Commercial pizza pan sizes and sourcing guide: https://linhaobakeware.com/insights/commercial-pizza-pan-sizes-buying-guide
+- Pizza pans category and container loading matrix: https://linhaobakeware.com/products/pizza-pans
+
+### Specialty and bread molds
+
+- 250g Shokupan Pullman loaf pan with sliding lid: https://linhaobakeware.com/products/shokupan-pullman-loaf-pan
+
+### Environmental and regulatory compliance
+
+- PFAS-free nonstick bakeware regulations and sourcing guide (2025–2026): https://linhaobakeware.com/insights/pfas-free-nonstick-bakeware-regulations
+- Sol-gel ceramic and organic silicone coating testing protocols: https://linhaobakeware.com/quality
+
+### Pizza pans and commercial foodservice
+
+- Commercial pizza pan sizes and sourcing guide: https://linhaobakeware.com/insights/commercial-pizza-pan-sizes-buying-guide
+- Pizza pans category and container loading matrix: https://linhaobakeware.com/products/pizza-pans
+
+### Specialty and bread molds
+
+- 250g Shokupan Pullman loaf pan with sliding lid: https://linhaobakeware.com/products/shokupan-pullman-loaf-pan
 
 ### Baking sheets
 

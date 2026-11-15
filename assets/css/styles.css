@@ -35,7 +35,7 @@ button,input,textarea,select{font:inherit}
 .gold{color:var(--gold)}
 .kicker{font-size:1.05rem;color:var(--muted);max-width:760px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;border:1px solid transparent;font-weight:800;transition:.25s ease;cursor:pointer}
-.btn-primary{background:var(--gold);color:#101820;box-shadow:0 12px 30px rgba(200,154,59,.22)}
+.btn-primary{background:#d7aa4c;color:#101820;box-shadow:0 12px 30px rgba(200,154,59,.22)}
 .btn-primary:hover{transform:translateY(-2px);background:#d7aa4c}
 .btn-dark{background:var(--navy);color:#fff}
 .btn-dark:hover{background:var(--navy-2);transform:translateY(-2px)}
@@ -228,11 +228,11 @@ textarea{min-height:132px;resize:vertical}
 .footer-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:46px}
 .footer-brand img{width:220px;height:82px;object-fit:contain;object-position:left center;filter:drop-shadow(0 1px 0 rgba(255,255,255,.2));background:#fff;border-radius:12px;padding:5px}
 .footer-brand p{color:#9eb0be;max-width:390px;font-size:.9rem}
-.footer-col h4{margin:0 0 17px;color:#fff}
+.footer-col h3,.footer-col h4{font-size:1rem;margin:0 0 17px;color:#fff}
 .footer-col a{display:block;color:#9eb0be;margin:10px 0;font-size:.88rem}
 .footer-col a:hover{color:#fff}
 .footer-bottom{display:flex;justify-content:space-between;gap:20px;border-top:1px solid rgba(255,255,255,.12);padding-top:22px;margin-top:48px;color:#8096a6;font-size:.8rem}
-.whatsapp-float{position:fixed;right:22px;bottom:22px;z-index:50;background:#1f9d68;color:#fff;border-radius:999px;padding:13px 18px;box-shadow:0 12px 32px rgba(20,100,70,.35);font-weight:850}
+.whatsapp-float{position:fixed;right:22px;bottom:22px;z-index:50;background:#14734a;color:#fff;border-radius:999px;padding:13px 18px;box-shadow:0 12px 32px rgba(20,100,70,.35);font-weight:850}
 .reveal{opacity:0;transform:translateY(20px);transition:.7s ease}
 .reveal.visible{opacity:1;transform:none}
 .hero .reveal{opacity:1;transform:none}
@@ -265,3 +265,5 @@ textarea{min-height:132px;resize:vertical}
 
 .hero .hero-copy, .hero .hero-visual { opacity: 1 !important; transform: none !important; transition: none !important; }
 .hero-image { aspect-ratio: 1500 / 1184; height: auto; }
+
+.section-navy .eyebrow,.section-navy .stat strong,.cta .eyebrow{color:var(--gold-soft)}

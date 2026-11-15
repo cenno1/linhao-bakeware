@@ -265,3 +265,12 @@ textarea{min-height:132px;resize:vertical}
 
 .hero .hero-copy, .hero .hero-visual { opacity: 1 !important; transform: none !important; transition: none !important; }
 .hero-image { aspect-ratio: 1500 / 1184; height: auto; }
+
+.quote-checklist{width:100%;border-collapse:collapse;margin:24px 0;text-align:left}
+.quote-checklist caption{text-align:left;font-weight:700;padding:0 0 12px}
+.quote-checklist th,.quote-checklist td{padding:12px;vertical-align:top;border-bottom:1px solid var(--line)}
+.quote-checklist thead{background:var(--navy);color:white}
+.quote-checklist tbody th{background:var(--cream)}
+@media(max-width:700px){
+  .quote-checklist th,.quote-checklist td{padding:8px 5px;overflow-wrap:anywhere;font-size:.9rem}
+}

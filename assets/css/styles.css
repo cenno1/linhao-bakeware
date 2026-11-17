@@ -274,3 +274,20 @@ textarea{min-height:132px;resize:vertical}
 @media(max-width:700px){
   .quote-checklist th,.quote-checklist td{padding:8px 5px;overflow-wrap:anywhere;font-size:.9rem}
 }
+
+.guide-contact{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-block:1rem}
+.guide-contact a{text-decoration:underline}
+.mobile-quote{display:none}
+@media(max-width:760px){
+  .menu-toggle,.btn,.contact-dock a,.nav-links.open a,.guide-contact a{min-height:44px}
+  .menu-toggle{min-width:44px}
+  .guide-contact a,.nav-links.open a{display:inline-flex;align-items:center}
+  .form-group :is(input,select,textarea){font-size:16px}
+  .mobile-quote{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:40;background:#102637;padding:4px 12px calc(4px + env(safe-area-inset-bottom));gap:10px}
+  .mobile-quote a{flex:1;text-align:center;color:white;display:grid;place-items:center;min-height:44px}
+  body:has(.mobile-quote),body:has(.contact-dock){padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+  body:has(.mobile-quote) .whatsapp-float,body:has(.contact-dock) .whatsapp-float{display:none}
+}
+@media print{.mobile-quote{display:none}}
+
+.hero .hero-copy,.hero .hero-visual{opacity:1;transform:none}

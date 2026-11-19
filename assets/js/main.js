@@ -1,3 +1,42 @@
+
+function readAiReferral() {
+  const storageKey = 'linhao_ai_referral';
+  const sourceByHost = {
+    'chatgpt.com': 'chatgpt',
+    'chat.openai.com': 'chatgpt',
+    'perplexity.ai': 'perplexity',
+    'www.perplexity.ai': 'perplexity',
+    'copilot.microsoft.com': 'copilot',
+    'gemini.google.com': 'gemini',
+    'claude.ai': 'claude'
+  };
+  let host = '';
+  try { host = new URL(document.referrer).hostname.toLowerCase(); } catch {}
+  const source = sourceByHost[host];
+  const now = Date.now();
+  const current = source ? { source, expires: now + 30 * 60 * 1000 } : null;
+  try {
+    if (current) {
+      sessionStorage.setItem(storageKey, JSON.stringify(current));
+      return current;
+    }
+    if (host && host !== window.location.hostname) {
+      sessionStorage.removeItem(storageKey);
+      return '';
+    }
+    const stored = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
+    if (stored && stored.expires > now && Object.values(sourceByHost).includes(stored.source)) {
+      return stored;
+    }
+    sessionStorage.removeItem(storageKey);
+  } catch {}
+  return current;
+}
+const aiReferral = readAiReferral();
+function getAiReferralSource() {
+  return aiReferral && aiReferral.expires > Date.now() ? aiReferral.source : '';
+}
+
 const GA_MEASUREMENT_ID = 'G-X2KSVBEBSQ';
 
 // ----------------------------------------------------
@@ -91,7 +130,7 @@ document.addEventListener('click', (event) => {
   // A. WhatsApp Click
   if (href.includes('wa.me/')) {
     gtag('event', 'contact_click', {
-      contact_method: 'whatsapp',
+      contact_method: 'whatsapp', ai_source: getAiReferralSource() || 'unattributed',
       link_url: href,
       source_page: window.location.pathname
     });
@@ -99,7 +138,7 @@ document.addEventListener('click', (event) => {
   // B. Email Click
   else if (href.startsWith('mailto:')) {
     gtag('event', 'contact_click', {
-      contact_method: 'email',
+      contact_method: 'email', ai_source: getAiReferralSource() || 'unattributed',
       target_email: href.replace('mailto:', '').split('?')[0],
       source_page: window.location.pathname
     });
@@ -210,6 +249,7 @@ if (inquiryForm) {
     const status = inquiryForm.querySelector('#inquiry-status');
     const data = new FormData(inquiryForm);
     data.delete('redirect');
+    if (getAiReferralSource()) data.set('ai_referral_source', getAiReferralSource());
     if (typeof getAttributionData === 'function') {
       const source = getAttributionData();
       for (const field of ['utm_source', 'utm_medium', 'utm_campaign']) {
@@ -237,7 +277,7 @@ if (inquiryForm) {
     const finish = () => window.location.replace('/thank-you');
     window.setTimeout(finish, 900);
     if (typeof gtag === 'function') {
-      gtag('event', 'generate_lead', { form_id: 'inquiry_form', event_callback: finish });
+      gtag('event', 'generate_lead', { form_id: 'inquiry_form', ai_source: getAiReferralSource() || 'unattributed', discovery_source: data.get('discovery_source') || 'not_provided', event_callback: finish });
     }
   });
 }
